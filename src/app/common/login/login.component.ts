@@ -23,26 +23,23 @@ export class LoginComponent {
     });
   }
 
+  onLogin(): void {
+    if (!this.loginForm.valid) return;
 
-  onLogin() {
-    if (this.loginForm.valid) {
-      const postData: any = {
-        ...this.loginForm.value
+    this.httpService.postData(apiUrl.LOGIN, this.loginForm.value).subscribe({
+      next: (response: any) => {
+        console.log("🚀 ~ Login Response:", response);
 
-      };
-
-      this.httpService.postData(apiUrl.LOGIN, postData).subscribe((response: any) => {
-        console.log("🚀 ~ LoginComponent ~ this.httpService.postData ~ response:", response)
         if (response.status === 200) {
-          localStorage.setItem('login', JSON.stringify(response.data));
-          localStorage.setItem('accessToken', JSON.stringify(response.data.token));
+          const { data } = response;
+          localStorage.setItem('login', JSON.stringify(data));
+          localStorage.setItem('accessToken', data.token);
           this.router.navigate(['/home-page']);
-
         }
-      });
-    }
-
+      },
+      error: (err) => {
+        console.error("Login Error:", err);
+      }
+    });
   }
-
-
 }
