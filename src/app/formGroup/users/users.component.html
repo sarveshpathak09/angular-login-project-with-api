@@ -1,0 +1,39 @@
+<div class="container mt-4">
+    <!-- Header with Add Button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Users List</h2>
+        <button class="btn btn-primary" routerLink="/add-users">
+            <i class="fa fa-plus"></i> Add User
+        </button>
+    </div>
+
+    <!-- Users Table -->
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <button class="btn btn-sm  me-2" routerLink="/view-users/{{i}}">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm me-2" routerLink="/edit-users/{{i}}">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm " (click)="deleteUser(user?.id)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

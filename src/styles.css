@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file,and also import other style files  */
+
+
+
+.container {
+    border: 1px solid black;
+    margin: 50px auto;
+    padding-bottom: 20px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-primary {
+    background-color: orange;
+    border: 1px solid orange;
+    color: black;
+}
