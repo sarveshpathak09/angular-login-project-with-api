@@ -42,6 +42,9 @@ const routes: Routes = [
   { path: 'edit-users/:id', component: AddEditViewusersComponent, canActivate: [AuthGuard] },
   { path: 'view-users/:id', component: AddEditViewusersComponent, canActivate: [AuthGuard] },
 
+  // Lazy Loading Module - Load module only when user navigate to this route
+  { path: '', loadChildren: () => import('./materialUI/matreial-ui.module').then(m => m.MatreialUIModule) },
+
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

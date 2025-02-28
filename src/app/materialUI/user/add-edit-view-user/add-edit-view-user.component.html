@@ -1,0 +1,56 @@
+<div class="mt-5">
+    <div class="card shadow-lg p-4" style="max-width: 600px; margin: auto; border-radius: 10px;">
+        <h4 class="mb-4 text-center">
+            {{ isViewOnly ? 'View User' : (isEditing ? 'Edit User' : 'Add User') }}
+        </h4>
+
+        <form [formGroup]="userForm" (ngSubmit)="addOrUpdateUser()">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Name</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Enter name"
+                    [readonly]="isViewOnly">
+                <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger mt-1">
+                    Name is required.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control" formControlName="email" placeholder="Enter email"
+                    [readonly]="isViewOnly">
+                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched && userForm.get('email')?.errors?.['required']"
+                    class="text-danger mt-1">
+                    Email is required.
+                </div>
+                <!-- Invalid email format error -->
+                <div *ngIf="userForm.get('email')?.errors?.['email']" class="text-danger mt-1">
+                    Please enter a valid email address.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Role</label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select Role</mat-label>
+                    <mat-select formControlName="role" [disabled]="isViewOnly">
+                        <mat-option *ngFor="let role of roles" [value]="role.value">
+                            {{ role.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" class="text-danger mt-1">
+                    Role is required.
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <button *ngIf="!isViewOnly" type="submit" class="btn btn-primary px-4 me-2">
+                    {{ isEditing ? 'Update' : 'Add' }} User
+                </button>
+                <button type="button" class="btn btn-secondary px-4" routerLink="/user">
+                    Back
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

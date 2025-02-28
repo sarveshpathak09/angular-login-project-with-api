@@ -17,6 +17,8 @@ import { LoginComponent } from './common/login/login.component';
 import { LogoutComponent } from './common/logout/logout.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { NavbarComponent } from './common/navbar/navbar.component';
+import { MatreialUIModule } from './materialUI/matreial-ui.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,15 @@ import { NavbarComponent } from './common/navbar/navbar.component';
     LoginComponent,
     LogoutComponent,
     HomePageComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule // ✅ Add HttpClientModule to imports
+    HttpClientModule, // ✅ Add HttpClientModule to imports
+    MatreialUIModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

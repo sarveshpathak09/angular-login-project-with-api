@@ -26,20 +26,18 @@ export class LoginComponent {
   onLogin(): void {
     if (!this.loginForm.valid) return;
 
-    this.httpService.postData(apiUrl.LOGIN, this.loginForm.value).subscribe({
-      next: (response: any) => {
-        console.log("🚀 ~ Login Response:", response);
+    this.httpService.postData(apiUrl.LOGIN, this.loginForm.value).subscribe((response: any) => {
+      console.log("🚀 ~ Login Response:", response);
 
-        if (response.status === 200) {
-          const { data } = response;
-          localStorage.setItem('login', JSON.stringify(data));
-          localStorage.setItem('accessToken', data.token);
-          this.router.navigate(['/home-page']);
-        }
-      },
-      error: (err) => {
-        console.error("Login Error:", err);
+      if (response.status === 200) {
+        const { data } = response;
+        localStorage.setItem('login', JSON.stringify(data));
+        localStorage.setItem('accessToken', data.token);
+        this.router.navigate(['/home-page']);
       }
-    });
+    }, (err) => {
+      console.error("Login Error:", err);
+    }
+    );
   }
 }
