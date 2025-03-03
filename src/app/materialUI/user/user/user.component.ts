@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ApiHttpsService } from 'src/app/services/api-https.service';
+import { apiUrl } from 'src/app/baseapi/apiURl';
 
 interface User {
   sr: number;
@@ -18,20 +20,18 @@ interface User {
 export class UserComponent implements OnInit {
 
   displayedColumns: string[] = ['sr', 'name', 'email', 'role', 'actions'];
-  dataSource = new MatTableDataSource<User>([
-    { sr: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
-    { sr: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
-    { sr: 3, name: 'Sam Wilson', email: 'sam@example.com', role: 'Manager' },
-    { sr: 4, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
-    { sr: 5, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
-    { sr: 6, name: 'Sam Wilson', email: 'sam@example.com', role: 'Manager' },
-  ]);
+  dataSource = new MatTableDataSource<User>([]);
 
   userList = ['Admin', 'User', 'Manager'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(
+    private httpService: ApiHttpsService
+  ) { }
+
   ngOnInit() {
+    this.getUserData();
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -45,8 +45,20 @@ export class UserComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteUser(user: User) {
-    console.log('Delete User', user);
+  getUserData = (): void => {
+    this.httpService.getData(apiUrl.GET_USER).subscribe((response: any) => {
+      this.dataSource = new MatTableDataSource<User>(response.data);
+      this.dataSource.paginator = this.paginator
+    });
+  }
+
+  deleteUser = (user: any): void => {
+    const postData = {
+      id: user._id
+    };
+    this.httpService.deleteData(apiUrl.DELETE_USER, postData).subscribe((response: any) => {
+      this.getUserData();
+    });
   }
 
 }

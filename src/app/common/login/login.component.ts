@@ -27,12 +27,11 @@ export class LoginComponent {
     if (!this.loginForm.valid) return;
 
     this.httpService.postData(apiUrl.LOGIN, this.loginForm.value).subscribe((response: any) => {
-      console.log("🚀 ~ Login Response:", response);
 
       if (response.status === 200) {
         const { data } = response;
         localStorage.setItem('login', JSON.stringify(data));
-        localStorage.setItem('accessToken', data.token);
+        localStorage.setItem('accessToken', JSON.stringify(data.token));
         this.router.navigate(['/home-page']);
       }
     }, (err) => {

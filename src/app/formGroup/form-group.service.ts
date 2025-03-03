@@ -15,7 +15,6 @@ export class FormGroupService {
 
   // Get users list
   getUsers() {
-    console.log("🚀 ~ FormGroupService ~ getUsers ~ this.users:", this.users)
     return this.users;
   }
 
